@@ -1,261 +1,225 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReNew | Database</title>
+@extends('layouts.app')
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+@section('title', 'Database')
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #1d2939;
-            line-height: 1.6;
-        }
+@section('content')
 
-        header {
-            background: #142d4e;
-            color: white;
-            padding: 20px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+<section class="page-heading">
+    <p class="eyebrow">EXPLORE OUR DATA</p>
+    <h2>Database Explorer</h2>
+    <p>
+        Explore notebook specifications, processor details,
+        and available operating systems from our database.
+    </p>
+</section>
 
-        header h1 {
-            font-size: 27px;
-        }
-
-        nav {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            max-width: 1400px;
-            margin: auto;
-            padding: 35px 5%;
-        }
-
-        .intro {
-            margin-bottom: 30px;
-        }
-
-        .intro h2 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .intro p {
-            color: #667085;
-        }
-
-        .section {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 28px;
-            box-shadow: 0 3px 12px #142d4e0d;
-        }
-
-        .section h3 {
-            margin-bottom: 16px;
-            font-size: 22px;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 650px;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eaecf0;
-        }
-
-        th {
-            background: #eaf1f9;
-            color: #142d4e;
-        }
-
-        tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        footer {
-            background: #142d4e;
-            color: white;
-            text-align: center;
-            padding: 22px;
-        }
-
-        @media (max-width: 600px) {
-            .section {
-                padding: 16px;
-            }
-
-            .intro h2 {
-                font-size: 26px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    <h1>ReNew</h1>
-
-    <nav>
-        <a href="{{ route('home') }}">Home</a>
-        <a href="{{ route('database.index') }}">Database</a>
-        <a href="{{ url('/graph') }}">Graph</a>
-        <a href="{{ url('/contact') }}">Contact</a>
-    </nav>
-</header>
-
-<main>
-    <section class="intro">
-        <h2>Database Explorer</h2>
-        <p>
-            Explore notebook specifications, processor details,
-            and available operating systems from our database.
-        </p>
-    </section>
-
-    <section class="section">
-        <h3>Notebooks ({{ $notebooks->count() }})</h3>
-
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Manufacturer</th>
-                        <th>Model</th>
-                        <th>Display</th>
-                        <th>Memory (MB)</th>
-                        <th>Storage (GB)</th>
-                        <th>Processor</th>
-                        <th>Operating System</th>
-                        <th>Price (Ft)</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @forelse ($notebooks as $notebook)
-                        <tr>
-                            <td>{{ $notebook->manufacturer }}</td>
-                            <td>{{ $notebook->type }}</td>
-                            <td>{{ $notebook->display }}</td>
-                            <td>{{ $notebook->memory }}</td>
-                            <td>{{ $notebook->harddisk }}</td>
-                            <td>
-                                {{ $notebook->processor?->manufacturer }}
-                                {{ $notebook->processor?->type }}
-                            </td>
-                            <td>
-                                {{ $notebook->operatingSystem?->name }}
-                            </td>
-                            <td>
-                                {{ number_format((float) $notebook->price, 0, ',', ' ') }}
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8">No notebooks found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+<section class="card database-section">
+    <div class="section-title">
+        <div>
+            <p class="section-eyebrow">DEVICE CATALOGUE</p>
+            <h3>Notebooks</h3>
         </div>
-    </section>
+        <span class="count-badge">{{ $notebooks->count() }} records</span>
+    </div>
 
-    <section class="section">
-        <h3>Processors ({{ $processors->count() }})</h3>
-
-        <div class="table-wrapper">
-            <table>
-                <thead>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Display</th>
+                    <th>Memory (MB)</th>
+                    <th>Storage (GB)</th>
+                    <th>Processor</th>
+                    <th>Operating System</th>
+                    <th>Price (Ft)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($notebooks as $notebook)
                     <tr>
-                        <th>ID</th>
-                        <th>Manufacturer</th>
-                        <th>Processor type</th>
+                        <td><strong>{{ $notebook->manufacturer }}</strong></td>
+                        <td>{{ $notebook->type }}</td>
+                        <td>{{ $notebook->display }}</td>
+                        <td>{{ $notebook->memory }}</td>
+                        <td>{{ $notebook->harddisk }}</td>
+                        <td>
+                            {{ $notebook->processor?->manufacturer }}
+                            {{ $notebook->processor?->type }}
+                        </td>
+                        <td>
+                            {{ $notebook->operatingSystem?->name ?? 'Not specified' }}
+                        </td>
+                        <td class="price-cell">
+                            {{ number_format((float) $notebook->price, 0, ',', ' ') }}
+                        </td>
                     </tr>
-                </thead>
-
-                <tbody>
-                    @forelse ($processors as $processor)
-                        <tr>
-                            <td>{{ $processor->id }}</td>
-                            <td>{{ $processor->manufacturer }}</td>
-                            <td>{{ $processor->type }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3">No processors found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <section class="section">
-        <h3>Operating Systems ({{ $operatingSystems->count() }})</h3>
-
-        <div class="table-wrapper">
-            <table>
-                <thead>
+                @empty
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
+                        <td colspan="8" class="empty-cell">No notebooks found.</td>
                     </tr>
-                </thead>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</section>
 
-                <tbody>
-                    @forelse ($operatingSystems as $system)
-                        <tr>
-                            <td>{{ $system->id }}</td>
-                            <td>{{ $system->name }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="2">No operating systems found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+<section class="card database-section">
+    <div class="section-title">
+        <div>
+            <p class="section-eyebrow">HARDWARE COMPONENTS</p>
+            <h3>Processors</h3>
         </div>
-    </section>
-</main>
+        <span class="count-badge">{{ $processors->count() }} records</span>
+    </div>
 
-<footer>
-    <p>&copy; {{ date('Y') }} ReNew. Laptop catalogue project.</p>
-</footer>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Manufacturer</th>
+                    <th>Processor type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($processors as $processor)
+                    <tr>
+                        <td>{{ $processor->id }}</td>
+                        <td><strong>{{ $processor->manufacturer }}</strong></td>
+                        <td>{{ $processor->type }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="empty-cell">No processors found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</section>
 
-</body>
-</html>
+<section class="card database-section">
+    <div class="section-title">
+        <div>
+            <p class="section-eyebrow">SOFTWARE INFORMATION</p>
+            <h3>Operating Systems</h3>
+        </div>
+        <span class="count-badge">{{ $operatingSystems->count() }} records</span>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($operatingSystems as $system)
+                    <tr>
+                        <td>{{ $system->id }}</td>
+                        <td><strong>{{ $system->name }}</strong></td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2" class="empty-cell">No operating systems found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@endsection
+
+@push('styles')
+<style>
+    .eyebrow {
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.7px;
+        margin-bottom: 8px;
+    }
+
+    .database-section {
+        margin-bottom: 26px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 23px 24px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .section-title h3 {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .section-eyebrow {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.3px;
+        margin-bottom: 4px;
+    }
+
+    .count-badge {
+        flex-shrink: 0;
+        background: #eaf1f9;
+        color: var(--primary);
+        border-radius: 20px;
+        padding: 6px 11px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .database-section .table-wrapper {
+        padding: 0 12px 8px;
+    }
+
+    .database-section table {
+        min-width: 650px;
+    }
+
+    .database-section th {
+        font-size: 12px;
+    }
+
+    .database-section td {
+        font-size: 13px;
+    }
+
+    .price-cell {
+        color: var(--accent);
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .empty-cell {
+        color: var(--muted);
+        text-align: center;
+        padding: 25px;
+    }
+
+    @media (max-width: 600px) {
+        .section-title {
+            padding: 18px;
+        }
+
+        .database-section .table-wrapper {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
+</style>
+@endpush

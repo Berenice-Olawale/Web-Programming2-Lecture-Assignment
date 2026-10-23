@@ -1,153 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReNew | Graph</title>
+@extends('layouts.app')
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section('title', 'Graph')
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+@section('content')
+
+<section class="page-heading">
+    <p class="eyebrow">DATA VISUALIZATION</p>
+    <h2>Notebook Statistics</h2>
+    <p>
+        Explore the number of notebooks listed for each manufacturer.
+        This interactive chart is generated directly from our database.
+    </p>
+</section>
+
+<section class="card chart-card">
+    <div class="chart-heading">
+        <div>
+            <p class="section-eyebrow">CATALOGUE ANALYTICS</p>
+            <h3>Notebooks by Manufacturer</h3>
+            <p class="chart-description">
+                Compare how many notebook models are recorded for each manufacturer.
+            </p>
+        </div>
+
+        <div class="chart-total">
+            <span>Total notebook models</span>
+            <strong>{{ $notebooksByManufacturer->sum('total') }}</strong>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas
+            id="manufacturerChart"
+            role="img"
+            aria-label="Bar chart showing notebook counts by manufacturer">
+            Your browser does not support the canvas element.
+        </canvas>
+    </div>
+
+    <p class="chart-note">
+        <span class="note-dot"></span>
+        Data source: ReNew notebook database
+    </p>
+</section>
+
+@endsection
+
+@push('styles')
+<style>
+    .eyebrow {
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.7px;
+        margin-bottom: 8px;
+    }
+
+    .chart-card {
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .chart-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        padding: 26px 28px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .section-eyebrow {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.3px;
+        margin-bottom: 5px;
+    }
+
+    .chart-heading h3 {
+        margin-bottom: 6px;
+        font-size: 21px;
+    }
+
+    .chart-description {
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    .chart-total {
+        flex-shrink: 0;
+        min-width: 150px;
+        padding: 14px 17px;
+        border-radius: 10px;
+        background: #eaf1f9;
+    }
+
+    .chart-total span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .chart-total strong {
+        color: var(--primary);
+        font-size: 29px;
+        line-height: 1.3;
+    }
+
+    .chart-container {
+        position: relative;
+        width: 100%;
+        height: 420px;
+        padding: 26px 28px 20px;
+    }
+
+    .chart-note {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        padding: 0 28px 22px;
+    }
+
+    .note-dot {
+        width: 8px;
+        height: 8px;
+        flex-shrink: 0;
+        background: #3976b9;
+        border-radius: 50%;
+    }
+
+    @media (max-width: 650px) {
+        .chart-heading {
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 20px;
+            gap: 18px;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #1d2939;
-            line-height: 1.6;
-        }
-
-        header {
-            background: #142d4e;
-            color: white;
-            padding: 20px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        header h1 {
-            font-size: 27px;
-        }
-
-        nav {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 6%;
-        }
-
-        .intro {
-            margin-bottom: 28px;
-        }
-
-        .intro h2 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .intro p {
-            color: #667085;
-        }
-
-        .chart-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px #142d4e0d;
+        .chart-total {
+            width: 100%;
         }
 
         .chart-container {
-            position: relative;
-            width: 100%;
-            height: 420px;
+            height: 340px;
+            padding: 20px 12px;
         }
 
-        footer {
-            background: #142d4e;
-            color: white;
-            text-align: center;
-            padding: 22px;
+        .chart-note {
+            padding: 0 20px 20px;
         }
+    }
+</style>
+@endpush
 
-        @media (max-width: 600px) {
-            main {
-                padding: 28px 4%;
-            }
-
-            .intro h2 {
-                font-size: 26px;
-            }
-
-            .chart-card {
-                padding: 15px;
-            }
-
-            .chart-container {
-                height: 350px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    <h1>ReNew</h1>
-
-    <nav>
-        <a href="{{ route('home') }}">Home</a>
-        <a href="{{ route('database.index') }}">Database</a>
-        <a href="{{ route('graph.index') }}">Graph</a>
-        <a href="{{ url('/contact') }}">Contact</a>
-    </nav>
-</header>
-
-<main>
-    <section class="intro">
-        <h2>Notebook Statistics</h2>
-        <p>
-            Explore the number of notebooks listed for each manufacturer.
-            The chart is generated from our database.
-        </p>
-    </section>
-
-    <section class="chart-card">
-        <h3>Notebooks by Manufacturer</h3>
-
-        <div class="chart-container">
-            <canvas id="manufacturerChart"
-                    role="img"
-                    aria-label="Bar chart showing notebook counts by manufacturer">
-                Your browser does not support the canvas element.
-            </canvas>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <p>&copy; {{ date('Y') }} ReNew. Laptop catalogue project.</p>
-</footer>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     const manufacturers = @json(
@@ -160,55 +171,76 @@
 
     const canvas = document.getElementById('manufacturerChart');
 
-    new Chart(canvas, {
-        type: 'bar',
+    if (canvas) {
+        new Chart(canvas, {
+            type: 'bar',
 
-        data: {
-            labels: manufacturers,
+            data: {
+                labels: manufacturers,
 
-            datasets: [{
-                label: 'Number of notebooks',
-                data: notebookCounts,
-                backgroundColor: 'rgba(36, 99, 166, 0.75)',
-                borderColor: 'rgba(20, 45, 78, 1)',
-                borderWidth: 1,
-                borderRadius: 5
-            }]
-        },
-
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
+                datasets: [{
+                    label: 'Number of notebooks',
+                    data: notebookCounts,
+                    backgroundColor: 'rgba(57, 118, 185, 0.78)',
+                    borderColor: 'rgba(23, 54, 91, 1)',
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    maxBarThickness: 58
+                }]
             },
 
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    },
-                    title: {
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
                         display: true,
-                        text: 'Number of notebooks'
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'rectRounded',
+                            padding: 20
+                        }
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' Notebooks: ' + context.parsed.y;
+                            }
+                        }
                     }
                 },
 
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Manufacturer'
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0,
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of notebooks'
+                        },
+                        grid: {
+                            color: '#edf1f6'
+                        }
+                    },
+
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Manufacturer'
+                        },
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 </script>
-
-</body>
-</html>
+@endpush
