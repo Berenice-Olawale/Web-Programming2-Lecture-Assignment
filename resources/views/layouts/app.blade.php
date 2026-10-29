@@ -277,7 +277,11 @@
                 Graph
             </a>
 
-            <a href="{{ url('/contact') }}">Contact</a>
+            <a href="{{ route('contact.create') }}"
+               @class(['active' => request()->routeIs('contact.*')])
+               @if(request()->routeIs('contact.*')) aria-current="page" @endif>
+                Contact
+            </a>
         </nav>
     </div>
 </header>
