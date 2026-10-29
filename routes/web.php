@@ -6,6 +6,7 @@ use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotebookController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -20,3 +21,5 @@ Route::get('/contact', [ContactController::class, 'create'])->name('contact.crea
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+
+Route::resource('notebooks', NotebookController::class)->except(['show']);
