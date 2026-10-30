@@ -9,9 +9,7 @@ class NotebookSeeder extends Seeder
 {
     public function run(): void
     {
-        $path = getenv('HOME')
-            . '/Documents/5TH SEMESTER/Web programming 2/web2_lecture/Databases for Homeworks (2)/01-Notebook/notebook.txt';
-
+        $path = database_path('seeders/data/notebook.txt');
         $file = fopen($path, 'r');
 
         if ($file === false) {
