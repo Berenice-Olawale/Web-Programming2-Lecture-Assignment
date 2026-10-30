@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Graph')
-
-@section('content')
+<x-mainpage title="Home">
 
 <section class="page-heading">
     <p class="eyebrow">DATA VISUALIZATION</p>
@@ -44,7 +40,7 @@
     </p>
 </section>
 
-@endsection
+
 
 @push('styles')
 <style>
@@ -244,3 +240,4 @@
     }
 </script>
 @endpush
+</x-mainpage>

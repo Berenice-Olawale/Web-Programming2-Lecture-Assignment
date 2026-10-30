@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Home')
-
-@section('content')
+<x-mainpage title="Home">
 
 <section class="hero">
     <div class="hero-content">
@@ -115,7 +111,6 @@
     </div>
 </section>
 
-@endsection
 
 @push('styles')
 <style>
@@ -396,3 +391,4 @@
     }
 </style>
 @endpush
+</x-mainpage>

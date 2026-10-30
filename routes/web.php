@@ -1,25 +1,34 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\GraphController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\NotebookController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/database', [DatabaseController::class, 'index'])->name('database.index');
+Route::get('/graph', [GraphController::class, 'index'])->name('graph.index');
 
-Route::get('/database', [DatabaseController::class, 'index'])
-    ->name('database.index');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
 
-Route::get('/graph', [GraphController::class, 'index'])
-    ->name('graph.index');
+    Route::get('user', function () {
+        return view('user');
+    })->name('user');
 
-Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+    Route::get('admin', [AdminController::class, 'adminPage']);
+});
 
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+require __DIR__.'/settings.php';
 
-Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('exercise1', function () {
+    return view('view1');
+});
 
-Route::resource('notebooks', NotebookController::class)->except(['show']);
+Route::get('introduction', function () {
+    return view('introduction');
+});

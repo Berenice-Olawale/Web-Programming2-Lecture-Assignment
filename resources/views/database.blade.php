@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Database')
-
-@section('content')
+<x-mainpage title="Home">
 
 <section class="page-heading">
     <p class="eyebrow">EXPLORE OUR DATA</p>
@@ -133,8 +129,6 @@
     </div>
 </section>
 
-@endsection
-
 @push('styles')
 <style>
     .eyebrow {
@@ -223,3 +217,4 @@
     }
 </style>
 @endpush
+</x-mainpage>
