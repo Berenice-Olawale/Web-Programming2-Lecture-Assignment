@@ -258,29 +258,32 @@
             Re<span>New</span>
         </a>
 
-        <nav class="main-nav" aria-label="Main navigation">
-    <a href="{{ route('home') }}" @class(['active' => request()->routeIs('home')])>Home</a>
-    <a href="{{ route('database.index') }}" @class(['active' => request()->routeIs('database.*')])>Database</a>
-    <a href="{{ route('graph.index') }}" @class(['active' => request()->routeIs('graph.*')])>Graph</a>
-    <a href="{{ url('/contact') }}">Contact</a>
+            <nav class="main-nav" aria-label="Main navigation">
+            <a href="{{ route('home') }}" @class(['active' => request()->routeIs('home')])>Home</a>
+            <a href="{{ route('database.index') }}" @class(['active' => request()->routeIs('database.*')])>Database</a>
+            <a href="{{ route('graph.index') }}" @class(['active' => request()->routeIs('graph.*')])>Graph</a>
+            <a href="{{ route('contact.create') }}" @class(['active' => request()->routeIs('contact.*')])>Contact</a>
 
-    @guest
-        <a href="{{ url('/login') }}">Login</a>
-        <a href="{{ url('/register') }}">Register</a>
-    @endguest
+            @guest
+                <a href="{{ url('/login') }}">Login</a>
+                <a href="{{ url('/register') }}">Register</a>
+            @endguest
 
-    @auth
-        <a href="{{ url('/dashboard') }}">Dashboard</a>
-        <a href="{{ url('/messages') }}">Messages</a>
-        @if (Auth::user()->role == 1)
-            <a href="{{ url('/admin') }}">Admin</a>
-        @endif
-        <form method="post" action="/logout" style="display:inline;">
-            @csrf
-            <button type="submit" style="background:none;border:none;cursor:pointer;color:var(--muted);font-weight:600;font-size:14px;padding:9px 13px;">Logout</button>
-        </form>
-    @endauth
-</nav>
+            @auth
+                <a href="{{ url('/dashboard') }}">Dashboard</a>
+                <a href="{{ route('messages.index') }}" @class(['active' => request()->routeIs('messages.*')])>Messages</a>
+
+                @if (Auth::user()->role == 1)
+                    <a href="{{ route('notebooks.index') }}" @class(['active' => request()->routeIs('notebooks.*')])>CRUD</a>
+                    <a href="{{ url('/admin') }}">Admin</a>
+                @endif
+
+                <form method="post" action="/logout" style="display:inline;">
+                    @csrf
+                    <button type="submit" style="background:none;border:none;cursor:pointer;color:var(--muted);font-weight:600;font-size:14px;padding:9px 13px;">Logout</button>
+                </form>
+            @endauth
+        </nav>
     </div>
 </header>
 
