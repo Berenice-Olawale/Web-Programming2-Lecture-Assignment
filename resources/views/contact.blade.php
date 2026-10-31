@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Contact')
-
-@section('content')
+<x-mainpage title="Contact">
 
 <section class="page-heading">
     <p class="eyebrow">GET IN TOUCH</p>
@@ -50,8 +46,6 @@
         <button type="submit">Send message</button>
     </form>
 </section>
-
-@endsection
 
 @push('styles')
 <style>
@@ -111,3 +105,5 @@
     }
 </style>
 @endpush
+
+</x-mainpage>

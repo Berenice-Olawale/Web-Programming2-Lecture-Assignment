@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Add Notebook')
-
-@section('content')
+<x-mainpage title="Add Notebook">
 
 <section class="page-heading">
     <p class="eyebrow">ADMIN</p>
@@ -17,4 +13,4 @@
     </form>
 </section>
 
-@endsection
+</x-mainpage>

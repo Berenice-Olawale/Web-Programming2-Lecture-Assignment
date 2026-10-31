@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Messages')
-
-@section('content')
+<x-mainpage title="Messages">
 
 <section class="page-heading">
     <p class="eyebrow">INBOX</p>
@@ -30,8 +26,6 @@
         <p>There are no messages yet.</p>
     </section>
 @endforelse
-
-@endsection
 
 @push('styles')
 <style>
@@ -72,3 +66,5 @@
     }
 </style>
 @endpush
+
+</x-mainpage>

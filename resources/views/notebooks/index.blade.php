@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Manage Notebooks')
-
-@section('content')
+<x-mainpage title="Manage Notebooks">
 
 <section class="page-heading">
     <p class="eyebrow">ADMIN</p>
@@ -77,8 +73,6 @@
     </div>
 </section>
 
-@endsection
-
 @push('styles')
 <style>
     .eyebrow {
@@ -146,3 +140,5 @@
     }
 </style>
 @endpush
+
+</x-mainpage>
