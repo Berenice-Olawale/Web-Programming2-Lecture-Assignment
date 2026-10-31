@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotebookController;
+use App\Http\Middleware\AdminOnly;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -31,4 +35,15 @@ Route::get('exercise1', function () {
 
 Route::get('introduction', function () {
     return view('introduction');
+});
+
+Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+});
+
+Route::middleware(['auth', AdminOnly::class])->group(function () {
+    Route::resource('notebooks', NotebookController::class)->except(['show']);
 });
