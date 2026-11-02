@@ -262,6 +262,7 @@
             <a href="{{ route('home') }}" @class(['active' => request()->routeIs('home')])>Home</a>
             <a href="{{ route('database.index') }}" @class(['active' => request()->routeIs('database.*')])>Database</a>
             <a href="{{ route('graph.index') }}" @class(['active' => request()->routeIs('graph.*')])>Graph</a>
+            <a href="{{ route('price.form') }}" @class(['active' => request()->routeIs('price.*')])>Test</a>
             <a href="{{ route('contact.create') }}" @class(['active' => request()->routeIs('contact.*')])>Contact</a>
 
             @guest

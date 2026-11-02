@@ -10,6 +10,10 @@ use App\Http\Controllers\NotebookController;
 use App\Http\Middleware\AdminOnly;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PriceCalculatorController;
+
+Route::get('/price-calculator', [PriceCalculatorController::class, 'showForm'])->name('price.form');
+Route::post('/price-calculator', [PriceCalculatorController::class, 'calculate'])->name('price.calculate');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/database', [DatabaseController::class, 'index'])->name('database.index');
