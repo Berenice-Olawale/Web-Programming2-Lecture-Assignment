@@ -11,6 +11,7 @@ use App\Http\Middleware\AdminOnly;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PriceCalculatorController;
+use App\Http\Controllers\NotebookApiController;
 
 Route::get('/price-calculator', [PriceCalculatorController::class, 'showForm'])->name('price.form');
 Route::post('/price-calculator', [PriceCalculatorController::class, 'calculate'])->name('price.calculate');
@@ -50,4 +51,15 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', AdminOnly::class])->group(function () {
     Route::resource('notebooks', NotebookController::class)->except(['show']);
+});
+
+Route::get('/react', function () {
+    return view('react');
+})->name('react.index');
+
+Route::prefix('react-api')->group(function () {
+    Route::get('lookups', [NotebookApiController::class, 'lookups']);
+    Route::apiResource('notebooks', NotebookApiController::class)
+        ->except(['show'])
+        ->names('react_api.notebooks');
 });
