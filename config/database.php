@@ -44,6 +44,13 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        'react' => [
+            'driver' => 'sqlite',
+            'database' => env('REACT_DB_PATH', 'C:/data/react.sqlite'),
+            'prefix' => '',
+            'foreign_key_constraints' => true,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
