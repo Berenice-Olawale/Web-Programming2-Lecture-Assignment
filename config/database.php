@@ -46,8 +46,7 @@ return [
 
         'react' => [
             'driver' => 'sqlite',
-            'database' => env('REACT_DB_PATH', 'C:/data/react.sqlite'),
-            'prefix' => '',
+            'database' => env('REACT_DB_PATH', database_path('react.sqlite')),
             'foreign_key_constraints' => true,
         ],
 
